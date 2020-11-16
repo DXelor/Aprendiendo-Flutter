@@ -55,14 +55,15 @@ class CardPage extends StatelessWidget {
   }
 
   Widget _cardTipo2() {
-    final card = Card(
-      clipBehavior: Clip.antiAlias,
-      elevation: 5.9,
+    final card = Container(
+      //clipBehavior: Clip.antiAlias,
+      //elevation: 5.9,
       child: Column(
         children: <Widget>[
           FadeInImage(
             placeholder: AssetImage('assets/jar-loading.gif'),
-            image: NetworkImage('https://www.1zoom.me/big/25/55928-hakufu.jpg'),
+            image: NetworkImage(
+                'https://losdioses.info/wp-content/uploads/2019/05/dragones-mitologicos.jpg'),
             fadeInDuration: Duration(milliseconds: 200),
             height: 250.0,
             fit: BoxFit.cover,
@@ -88,20 +89,18 @@ class CardPage extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
         boxShadow: <BoxShadow>[
           BoxShadow(
-              color: Colors.grey,
-              blurRadius: 9.0,
-              spreadRadius: 0.5,
-              offset: Offset(10.1, 5.5))
+            color: Colors.grey,
+            blurRadius: 5.0,
+            spreadRadius: 0.5,
+            //offset: Offset(10.1, 5.5),
+          )
         ],
-        border: Border.all(
-          color: Colors.blue,
-          width: 1,
-        ),
+        borderRadius: BorderRadius.circular(20.0),
       ),
-      child: ClipRect(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20.0),
         child: card,
       ),
     );
