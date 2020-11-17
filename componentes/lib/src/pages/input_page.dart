@@ -6,7 +6,9 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  String _nombre;
+  String _nombre = '';
+  String _email = '';
+  String _password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,15 @@ class _InputPageState extends State<InputPage> {
       ),
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-        children: <Widget>[_crearInput(), Divider(), _crearPersona()],
+        children: <Widget>[
+          _crearInput(),
+          Divider(),
+          _crearEmail(),
+          Divider(),
+          _crearPersona(),
+          Divider(),
+          _crearPassword()
+        ],
       ),
     );
   }
@@ -30,20 +40,51 @@ class _InputPageState extends State<InputPage> {
           counter: Text('letras ${_nombre.length}'),
           hintText: 'nombre o nickname',
           labelText: 'nombre',
-          helperText: 'solo nombres',
+          helperText: 'Nombre o nickname',
           suffixIcon: Icon(Icons.accessibility),
           icon: Icon(Icons.account_circle)),
-      onChanged: (valor) {
-        setState(() {
-          _nombre = valor;
-        });
-      },
+      onChanged: (valor) => setState(() {
+        _nombre = valor;
+      }),
+    );
+  }
+
+  Widget _crearEmail() {
+    return TextField(
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+          hintText: 'Email',
+          labelText: 'Email',
+          helperText: 'direccion de correo electronico',
+          suffixIcon: Icon(Icons.alternate_email),
+          icon: Icon(Icons.email)),
+      onChanged: (valor) => setState(() {
+        _email = valor;
+      }),
+    );
+  }
+
+  Widget _crearPassword() {
+    return TextField(
+      obscureText: true,
+      decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+          hintText: 'Password',
+          labelText: 'Password',
+          helperText: 'Contraseña',
+          suffixIcon: Icon(Icons.lock),
+          icon: Icon(Icons.security_rounded)),
+      onChanged: (valor) => setState(() {
+        _password = valor;
+      }),
     );
   }
 
   Widget _crearPersona() {
     return ListTile(
       title: Text('Nombre es: $_nombre'),
+      subtitle: Text('Email: $_email'),
     );
   }
 }
