@@ -8,7 +8,11 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   String _nombre = '';
   String _email = '';
-  String _password = '';
+  //String _password = '';
+  String _fecha = '';
+
+  TextEditingController _controlesDeFecha =
+      new TextEditingController(); //controles del calendario para asignar fecha
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +27,11 @@ class _InputPageState extends State<InputPage> {
           Divider(),
           _crearEmail(),
           Divider(),
-          _crearPersona(),
+          _crearPassword(),
           Divider(),
-          _crearPassword()
+          _crearFecha(context),
+          Divider(),
+          _crearPersona(),
         ],
       ),
     );
@@ -76,9 +82,43 @@ class _InputPageState extends State<InputPage> {
           suffixIcon: Icon(Icons.lock),
           icon: Icon(Icons.security_rounded)),
       onChanged: (valor) => setState(() {
-        _password = valor;
+        //_password = valor;
       }),
     );
+  }
+
+  Widget _crearFecha(BuildContext context) {
+    return TextField(
+        enableInteractiveSelection: false,
+        controller: _controlesDeFecha,
+        decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+            hintText: 'Fecha de nacimiento',
+            labelText: 'Fecha',
+            helperText: 'Fecha',
+            suffixIcon: Icon(Icons.perm_contact_calendar),
+            icon: Icon(Icons.calendar_today)),
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+          _selectDate(context);
+        });
+  }
+
+  _selectDate(BuildContext context) async {
+    DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: new DateTime.now(),
+        firstDate: new DateTime(2018),
+        lastDate: new DateTime(2022),
+        locale: Locale('es', 'ES'));
+
+    if (picked != null) {
+      setState(() {
+        _fecha = picked.toString();
+        _controlesDeFecha.text = _fecha;
+      });
+    }
   }
 
   Widget _crearPersona() {
